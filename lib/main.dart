@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mask_mvvm/data/repository/mock_location_repository.dart';
+import 'package:flutter_mask_mvvm/data/repository/mock_store_repository.dart';
+import 'package:flutter_mask_mvvm/data/repository/store_repository_impl.dart';
 import 'package:flutter_mask_mvvm/ui/main_screen.dart';
+import 'package:flutter_mask_mvvm/ui/main_view_model.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +21,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MainScreen(),
+      home: ChangeNotifierProvider(
+        create: (context) {
+          return MainViewModel(
+            storeRepository: StoreRepositoryImpl(),
+            locationRepository: MockLocationRepository(),
+          );
+        },
+        child: const MainScreen(),
+      ),
     );
   }
 }

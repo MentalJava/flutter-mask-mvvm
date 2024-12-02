@@ -11,7 +11,9 @@ class MainViewModel with ChangeNotifier {
       {required StoreRepository storeRepository,
       required LocationRepository locationRepository})
       : _storeRepository = storeRepository,
-        _locationRepository = locationRepository;
+        _locationRepository = locationRepository {
+    fetchStores();
+  }
 
   List<MaskStore> _stores = [];
   bool _isLoading = false;

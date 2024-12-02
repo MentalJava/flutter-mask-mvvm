@@ -1,37 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mask_mvvm/data/model/mask_store.dart';
 import 'package:flutter_mask_mvvm/ui/component/store_item.dart';
+import 'package:flutter_mask_mvvm/ui/main_view_model.dart';
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatelessWidget {
-  const MainScreen({super.key});
+  const MainScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<MainViewModel>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('마스크 재고 있는 곳 : 0곳'),
+        title: Text('마스크 재고 있는 곳 : ${viewModel.stores.length}곳'),
       ),
       body: ListView(
-        children: [
-          StoreItem(
-            store: MaskStore(
-                name: 'text',
-                addr: 'text2',
-                distance: 10,
-                remainStat: 'some',
-                latitude: 10,
-                longitude: 0),
-          ),
-          StoreItem(
-            store: MaskStore(
-                name: 'text',
-                addr: 'text2',
-                distance: 10,
-                remainStat: 'some',
-                latitude: 10,
-                longitude: 0),
-          ),
-        ],
+        children:
+            viewModel.stores.map((store) => StoreItem(store: store)).toList(),
       ),
     );
   }
