@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mask_mvvm/data/repository/location_repository_impl.dart';
+import 'package:flutter_mask_mvvm/data/repository/store_repository_impl.dart';
+import 'package:flutter_mask_mvvm/ui/main_screen.dart';
+import 'package:flutter_mask_mvvm/ui/main_view_model.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,31 +15,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('title'),
-        titleTextStyle: const TextStyle(
-          color: Colors.white,
-          fontSize: 24,
-        ),
-        backgroundColor: Colors.blue,
-      ),
-      body: const Center(
-        child: Text('Hello World'),
+      home: ChangeNotifierProvider(
+        create: (context) {
+          return MainViewModel(
+            storeRepository: StoreRepositoryImpl(),
+            locationRepository: LocationRepositoryImpl(),
+          );
+        },
+        child: const MainScreen(),
       ),
     );
   }
